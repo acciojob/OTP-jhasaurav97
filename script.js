@@ -1,17 +1,19 @@
 //your JS code here. If required.
- const inputs = document.querySelectorAll(".code");
+  const inputs = document.querySelectorAll(".code");
     inputs.forEach((input, index) => {
-      input.addEventListener("click", (e) => {
-        const value = e.target.value;
+      input.addEventListener("input", (e) => {
+  const value = e.target.value;
 
-        // Keep only 1 digit
-        if(value.length > 1){
-          input.value = value.charAt(0);
-        }
-        if(value && index < inputs.length - 1){
-          inputs[index + 1].focus();
-        }
-      })
+  // Restrict to one digit
+  input.value = value.slice(0, 1);
+
+  if (value && index < inputs.length - 1) {
+    setTimeout(() => {
+      inputs[index + 1].focus(); // Add delay to allow Cypress to detect change
+    }, 0);
+  }
+});
+
       input.addEventListener('keydown', (e) => {
         if(e.key === 'Backspace'){
           if(input.value === '' && index > 0){
